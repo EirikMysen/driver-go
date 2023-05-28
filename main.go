@@ -35,7 +35,7 @@ func main() {
 	for {
 		select {
 		case a := <-drv_buttons:
-			//drvButtonsSelected = true
+			//drvButtonsSelected = true ...
 			fmt.Printf("%+v\n", a)
 			fmt.Printf("%+v\n", "buttons\n")
 			elevio.SetButtonLamp(a.Button, a.Floor, true)
