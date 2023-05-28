@@ -33,6 +33,7 @@ func main() {
 	go elevio.PollStopButton(drv_stop)
 
 	for {
+		print("Cases button/floor/stop/obstc STARTER \n")
 		select {
 		case a := <-drv_buttons:
 			//drvButtonsSelected = true ...
@@ -69,21 +70,16 @@ func main() {
 			}
 		}
 		e.Floor = elevio.GetFloor()
+		print("Cases button/floor/stop/obstc FERDIG \n")
 		select {
 		case <-Timer.C:
-
+			print()
 			fmt.Println("Timer is done")
-			//fsm_onDoorTimeout()
-			Timer.Stop() // Stopp timeren for å unngå ytterligere hendelser fra Timer.C
+			Timer.Stop()
+			fsm.Fsm_OnDoorTimeout(e, Timer, duration)
 		default:
-			// Timeren er ikke ferdig, fortsett med resten av koden
+
 		}
 
-		//if !drvButtonsSelected {
-		//	e.Dirn = pair.Dirn
-		//	e.Behav = pair.Behaviour
-		//	elevio.SetMotorDirection(e.Dirn)
-		//}
-		//lagt inn denne selv.
 	}
 }

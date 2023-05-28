@@ -13,9 +13,7 @@ import (
 //Foreløpig får jeg ikke bruk for denne.
 
 func ResetAndStartTimer(timer *time.Timer, duration time.Duration) {
-	if !timer.Stop() {
-		<-timer.C
-	}
+
 	timer.Reset(duration)
 }
 
