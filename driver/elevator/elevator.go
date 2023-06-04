@@ -1,7 +1,7 @@
 package elevator
 
 import (
-	"Driver-go/elevio"
+	"Driver-go/driver/elevio"
 	"fmt"
 )
 
@@ -28,7 +28,7 @@ type Elevator struct {
 func InitializeElevator() Elevator {
 	elevator := Elevator{
 		Floor:    elevio.GetFloor(),
-		Dirn:     elevio.MD_Down,
+		Dirn:     elevio.MD_Stop,
 		Requests: make([][]int, NumFloors),
 		Behav:    EB_Moving,
 	}

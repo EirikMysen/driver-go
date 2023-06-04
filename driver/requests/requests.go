@@ -1,8 +1,8 @@
 package requests
 
 import (
-	"Driver-go/elevator"
-	"Driver-go/elevio"
+	"Driver-go/driver/elevator"
+	"Driver-go/driver/elevio"
 )
 
 type DirnBehaviourPair struct {
@@ -42,6 +42,7 @@ func RequestsHere(e elevator.Elevator) bool {
 }
 
 func RequestsChooseDirection(e elevator.Elevator) DirnBehaviourPair {
+	print("\n kjøyr RequestChooseDirection \n")
 	switch e.Dirn {
 	case elevio.MD_Up:
 		if RequestsAbove(e) {
