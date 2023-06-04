@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-//HEIS 1/AVSENDER
+//HEIS 2/MOTTAKER
 
 func main() {
 
@@ -28,7 +28,8 @@ func main() {
 	//initaliseres med getFloor, retning er MD_Stop, og Behav er EB_MOVING. Får se om dette byr på problemer..
 	duration := 3 * time.Second
 	Timer := time.NewTimer(duration)
-	Network_Active := false
+
+	Network_Active := true
 	//Network part
 
 	var id string
@@ -56,16 +57,6 @@ func main() {
 
 	go bcast.Transmitter(16570, helloTx)
 	go bcast.Receiver(16570, helloRx)
-
-	go func() {
-		elevator_network := e
-
-		for {
-
-			helloTx <- elevator_network
-			time.Sleep(1 * time.Second)
-		}
-	}()
 
 	//drvButtonsSelected := false
 	//Her i koden har main.c en funksjon som sjekker om heisen er imellom heiser. endrer da retning til ned ,og behaviour til Moving. Har satt dette
@@ -97,8 +88,8 @@ func main() {
 				//mulig det blir rør om du trykker på den etasjen du er i. får se
 			}
 
-			//For denne casen, så må det at en knapp blir trykket inn, påvirke  retning, state til Elevator, ButtonType(i allerede)
-			//Spørmålet er ,her eller i PollButtons?
+			elevator_network := e
+			helloTx <- elevator_network
 
 		case a := <-drv_floors:
 			fmt.Printf("%+v\n", a) //mtp å kvitte seg med ordre/registrere at ordren er fullført, mangelfullt?
@@ -144,7 +135,7 @@ func main() {
 				print()
 				fmt.Println("Timer is done")
 				Timer.Stop()
-				//Timer.Reset(duration)
+				//timer reset her i c, men ikke nå antar jeg(?)
 				e = fsm.Fsm_OnDoorTimeout(e, Timer, duration)
 
 			}
@@ -161,6 +152,8 @@ func main() {
 
 			case a := <-helloRx:
 				fmt.Printf("Received: %#v\n", a)
+
+			default:
 			}
 
 			time.Sleep(time.Duration(inputPollRateMs) * time.Millisecond)
